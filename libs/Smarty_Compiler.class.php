@@ -33,6 +33,14 @@
  */
 class Smarty_Compiler extends Smarty {
 
+    // Explicitly define properties
+    private $_dvar_math_regexp;
+    private $_dvar_math_var_regexp;
+    private $_obj_restricted_param_regexp;
+    private $_obj_single_param_regexp;
+    private $_param_regexp;
+    private $_plugins_code;
+
     // internal vars
     /**#@+
      * @access private
@@ -368,7 +376,7 @@ class Smarty_Compiler extends Smarty {
         $compiled_content = str_replace($tag_guard, '<?', $compiled_content); 
         
         // remove \n from the end of the file, if any
-        if (strlen($compiled_content) && (substr($compiled_content, -1) == "\n") ) {
+        if (strlen($compiled_content) && (str_ends_with($compiled_content, "\n")) ) {
             $compiled_content = substr($compiled_content, 0, -1);
         }
 
@@ -391,7 +399,7 @@ class Smarty_Compiler extends Smarty {
         }
 
         // put header at the top of the compiled template
-        $template_header = "<?php /* Smarty version ".$this->_version.", created on ".strftime("%Y-%m-%d %H:%M:%S")."\n";
+        $template_header = "<?php /* Smarty version ".$this->_version.", created on ".date("Y-m-d H:i:s")."\n";
         $template_header .= "         compiled from ".strtr(urlencode($resource_name), array('%2F'=>'/', '%3A'=>':'))." */ ?>\n";
 
         /* Emit code to load needed plugins. */
