@@ -52,16 +52,19 @@ if (!defined('SMARTY_CORE_DIR')) {
     define('SMARTY_CORE_DIR', SMARTY_DIR . 'internals' . DIRECTORY_SEPARATOR);
 }
 
-define('SMARTY_PHP_PASSTHRU',   0);
-define('SMARTY_PHP_QUOTE',      1);
-define('SMARTY_PHP_REMOVE',     2);
-define('SMARTY_PHP_ALLOW',      3);
+const SMARTY_PHP_PASSTHRU = 0;
+const SMARTY_PHP_QUOTE = 1;
+const SMARTY_PHP_REMOVE = 2;
+const SMARTY_PHP_ALLOW = 3;
 
 /**
  * @package Smarty
  */
 class Smarty
 {
+
+    var $_cache_include_info;
+
     /**#@+
      * Smarty Configuration Section
      */
@@ -1514,7 +1517,7 @@ class Smarty
      * @param string $resource_name
      * @return string results of {@link _get_auto_filename()}
      */
-    function _get_compile_path($resource_name)
+    function _get_compile_path($resource_name): string
     {
         return $this->_get_auto_filename($this->compile_dir, $resource_name,
                                          $this->_compile_id) . '.php';
